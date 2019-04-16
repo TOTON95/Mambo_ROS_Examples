@@ -1,0 +1,18 @@
+# simple waypoint test
+
+#name of drone
+mocap_name: "Mambo_4"
+
+#number of waypoints
+waypoints: 12
+# Trajectory
+# x (meters)
+X: [1.2, -0.6, -0.6, 1.2, 1.2, -0.6, -0.6, 1.2, 1.2, -0.6, -0.6, 1.2]
+# y (meters)                                                         
+Y: [0.9, 0.9, -0.9, -0.9, 0.9, 0.9, -0.9, -0.9, 0.9, 0.9, -0.9, -0.9]
+# z (meters)
+Z: [1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10]
+# Heading [deg]
+Hdg: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 90.0, 180.0, 270.0]
+# Waiting time at each waypoint [s]
+Time_goal: [10.0]
