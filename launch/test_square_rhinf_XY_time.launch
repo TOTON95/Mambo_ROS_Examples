@@ -1,14 +1,15 @@
 <launch>
-   <node name="joy_node" pkg="joy" type="joy_node">
+   <node name="joy_node" pkg="joy" type="joy_node" required="true">
      <param name="dev" value="/dev/input/js0"/>
   </node>
   <!--<group ns="mambo_wps">-->
-  <!--<rosparam command="load" file="$(find Mambo_ROS_Examples)/flights/test_square.yaml"/>-->
+  <rosparam command="load" file="$(find Mambo_ROS_Examples)/flights/test_time_rhinf.yaml"/>
   <arg name="bt_addr" default="e0:14:8D:47:3d:c7"/>
-  <node pkg="ros_pyparrot" type="mambo.py" name="mambo" output="screen">
+  <!--<<node pkg="ros_pyparrot" type="mambo.py" name="mambo" output="screen">
     <param name="bt" value="$(arg bt_addr)"/>
-  </node>
+  </node>-->
   <node pkg="Mambo_ROS_Examples" type="mambo_waypoints_node" name="mambo_waypoints_1" output="screen" required="true"/>
+  <!--<node pkg="Mambo_ROS_Examples" type="mambo_waypoints_time" name="mambo_waypoints_time_1" output="screen" required="true"/>-->
   <node pkg="pid" type="controller" name="position_X">
     <remap from="setpoint" to="setpoint_pos_X"/>
     <remap from="state" to="state_pos_X"/>
@@ -67,6 +68,7 @@
   </node>
   <!--<node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />-->
   <node pkg="rosbag" type="record" name="rosbag_record_drone"
-       args="record -o $(find Mambo_ROS_Examples)/Bags/test_ZERO /vicon/Mambo_2/Mambo_2 /control_effort_alt /control_effort_hdg /control_effort_pos_X /control_effort_pos_Y /setpoint_pos_X /setpoint_pos_Y /setpoint_alt /r_setpoint_hdg /ready /record /hdg" />
+       args="record -o $(find Mambo_ROS_Examples)/Bags/test_SQUARE /vicon/Mambo_5/Mambo_5 /control_effort_alt /control_effort_hdg /control_effort_pos_X /control_effort_pos_Y /setpoint_pos_X /setpoint_pos_Y /setpoint_alt /r_setpoint_hdg /ready /record /hdg /rhinf_ref_x /rhinf_st_x /rhinf_ref_y /rhinf_st_y /d_dis" />
   <!--</group>-->
 </launch>
+

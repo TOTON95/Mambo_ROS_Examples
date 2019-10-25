@@ -1,7 +1,7 @@
 # simple waypoint test
 
 #name of drone
-mocap_name: "Mambo_2"
+mocap_name: "Mambo_5"
 
 #number of waypoints
 waypoints: 12

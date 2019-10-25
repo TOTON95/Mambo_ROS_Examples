@@ -137,6 +137,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 #add_executable(mambo_simple_test_node src/mambo_simple_test.cpp)
 add_executable(mambo_waypoints_node src/mambo_waypoints.cpp src/ArcDrone.cpp)
+add_executable(mambo_waypoints_time src/mambo_waypoint_time.cpp)
 add_executable(mambo_guardian_angels_node src/mambo_guardian_angels.cpp)
 
 ## Rename C++ executable without prefix
@@ -149,6 +150,7 @@ add_executable(mambo_guardian_angels_node src/mambo_guardian_angels.cpp)
 ## same as for the library above
 #add_dependencies(mambo_simple_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_waypoints_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(mambo_waypoints_time ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_guardian_angels_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
@@ -156,6 +158,9 @@ add_dependencies(mambo_guardian_angels_node ${${PROJECT_NAME}_EXPORTED_TARGETS} 
   # ${catkin_LIBRARIES}
  #)
  target_link_libraries(mambo_waypoints_node
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(mambo_waypoints_time
    ${catkin_LIBRARIES}
  )
  target_link_libraries(mambo_guardian_angels_node

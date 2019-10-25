@@ -1,2 +1,4 @@
 # Ignore Experiment Results
 Bags/
+*.swp
+*.swo

@@ -245,7 +245,7 @@ int main(int argc, char** argv)
 	if(!n.getParam("mocap_name", vehicle_name))
 	{
 		ROS_ERROR("\nFailed to load Vehicle Name\n");
-		vehicle_name = "Mambo_4";
+		vehicle_name = "Mambo_5";
 	}
 
 	//Load the parameters
@@ -314,15 +314,18 @@ int main(int argc, char** argv)
 
 	printf("\n========== T A K E O F F ==========\n");
 	tko.publish(msg_tko);                                            //Take-off
-	ros::Duration(5.0).sleep();                                      //Wait until the drone elevates
+	ros::Duration(5).sleep();                                      //Wait until the drone elevates
 
-	while(n.ok())
+	while(n.ok() && !btn_emergency)
 	{
 		if(ready)
 		{
 			printf("\n=====START=====\n");
 			break;
 		}
+		else
+			printf("\n=====STAND-BY=====\n");
+			
 		ros::spinOnce();
 		r.sleep();
 				

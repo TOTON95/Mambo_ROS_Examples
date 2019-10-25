@@ -1,0 +1,116 @@
+<launch>
+	<!--BT addresses-->
+	<arg name="bt_addr_4" default="e0:14:8d:47:3d:c7"/>
+	<arg name="bt_addr_5" default="e0:14:a0:ae:3d:C7"/>
+	<arg name="bt_addr_6" default="e0:14:b3:02:3d:ca"/>
+
+	<node name="joy_node" pkg="joy" type="joy_node" required="true">
+		<param name="dev" value="/dev/input/js0"/>
+	</node>
+  	<!--<group ns="mambo_wps">-->
+  	<rosparam command="load" file="$(find Mambo_ROS_Examples)/flights/guardians_1.yaml"/>
+  	<node pkg="Mambo_ROS_Examples" type="mambo_guardian_angels_node" name="mambo_guardians_1" required="true" output="screen"/>
+  <group ns="UAS_1">
+	<param name="mocap_name" type="string" value="Mambo_4" />
+  	<node pkg="Mambo_ROS_Examples" type="mambo_waypoints_node" name="mambo_wp" output="screen" required="true"/>
+  	<node pkg="pid" type="controller" name="altittude">
+    		<remap from="setpoint" to="setpoint_alt"/>
+    		<remap from="state" to="state_alt"/>
+    		<remap from="control_effort" to="control_effort_alt"/>
+	   	<param name="Kp" value="3.5" />
+	    	<param name="Ki" value="0.0" />
+	    	<param name="Kd" value="0.0001" />
+	    	<param name="upper_limit" value="1.00" />
+	    	<param name="lower_limit" value="-1.00" />
+	    	<param name="windup_limit" value="10" />
+	    	<param name="cutoff_frequency" value="25" />
+	    	<param name="max_loop_frequency" value="100.0" />
+	    	<param name="min_loop_frequency" value="95.0" />
+  	</node>
+ 	<node pkg="pid" type="controller" name="heading">
+    		<remap from="setpoint" to="setpoint_hdg"/>
+    		<remap from="state" to="state_hdg"/>
+    		<remap from="control_effort" to="control_effort_hdg"/>
+    		<param name="Kp" value="0.02" />
+    		<param name="Ki" value="0.0" />
+		<param name="Kd" value="0.005" />
+		<param name="upper_limit" value="1.00" />
+		<param name="lower_limit" value="-1.00" />
+		<param name="windup_limit" value="10" />
+		<param name="cutoff_frequency" value="25" />
+		<param name="max_loop_frequency" value="100.0" />
+		<param name="min_loop_frequency" value="95.0" />
+	</node>
+	<node pkg="topic_tools" type="relay" name="wp_sender" args="/wp_uas_1 wp" output="screen" required="true"/>
+  </group>
+  <group ns="UAS_2">
+	<param name="mocap_name" type="string" value="Mambo_5" />
+  	<node pkg="Mambo_ROS_Examples" type="mambo_waypoints_node" name="mambo_wp" output="screen" required="true"/>
+  	<node pkg="pid" type="controller" name="altittude">
+    		<remap from="setpoint" to="setpoint_alt"/>
+    		<remap from="state" to="state_alt"/>
+    		<remap from="control_effort" to="control_effort_alt"/>
+	   	<param name="Kp" value="3.5" />
+	    	<param name="Ki" value="0.0" />
+	    	<param name="Kd" value="0.0001" />
+	    	<param name="upper_limit" value="1.00" />
+	    	<param name="lower_limit" value="-1.00" />
+	    	<param name="windup_limit" value="10" />
+	    	<param name="cutoff_frequency" value="25" />
+	    	<param name="max_loop_frequency" value="100.0" />
+	    	<param name="min_loop_frequency" value="95.0" />
+  	</node>
+ 	<node pkg="pid" type="controller" name="heading">
+    		<remap from="setpoint" to="setpoint_hdg"/>
+    		<remap from="state" to="state_hdg"/>
+    		<remap from="control_effort" to="control_effort_hdg"/>
+    		<param name="Kp" value="0.02" />
+    		<param name="Ki" value="0.0" />
+		<param name="Kd" value="0.005" />
+		<param name="upper_limit" value="1.00" />
+		<param name="lower_limit" value="-1.00" />
+		<param name="windup_limit" value="10" />
+		<param name="cutoff_frequency" value="25" />
+		<param name="max_loop_frequency" value="100.0" />
+		<param name="min_loop_frequency" value="95.0" />
+	</node>
+	<node pkg="topic_tools" type="relay" name="wp_sender" args="/wp_uas_2 wp" output="screen" required="true"/>
+  </group>
+  <group ns="UAS_3">
+	<param name="mocap_name" type="string" value="Mambo_6" />
+  	<node pkg="Mambo_ROS_Examples" type="mambo_waypoints_node" name="mambo_wp" output="screen" required="true"/>
+  	<node pkg="pid" type="controller" name="altittude">
+    		<remap from="setpoint" to="setpoint_alt"/>
+    		<remap from="state" to="state_alt"/>
+    		<remap from="control_effort" to="control_effort_alt"/>
+	   	<param name="Kp" value="3.5" />
+	    	<param name="Ki" value="0.0" />
+	    	<param name="Kd" value="0.0001" />
+	    	<param name="upper_limit" value="1.00" />
+	    	<param name="lower_limit" value="-1.00" />
+	    	<param name="windup_limit" value="10" />
+	    	<param name="cutoff_frequency" value="25" />
+	    	<param name="max_loop_frequency" value="100.0" />
+	    	<param name="min_loop_frequency" value="95.0" />
+  	</node>
+ 	<node pkg="pid" type="controller" name="heading">
+    		<remap from="setpoint" to="setpoint_hdg"/>
+    		<remap from="state" to="state_hdg"/>
+    		<remap from="control_effort" to="control_effort_hdg"/>
+    		<param name="Kp" value="0.02" />
+    		<param name="Ki" value="0.0" />
+		<param name="Kd" value="0.005" />
+		<param name="upper_limit" value="1.00" />
+		<param name="lower_limit" value="-1.00" />
+		<param name="windup_limit" value="10" />
+		<param name="cutoff_frequency" value="25" />
+		<param name="max_loop_frequency" value="100.0" />
+		<param name="min_loop_frequency" value="95.0" />
+	</node>
+	<node pkg="topic_tools" type="relay" name="wp_sender" args="/wp_uas_3 wp" output="screen" required="true"/>
+  </group>
+  <!--<node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />-->
+ <!-- <node pkg="rosbag" type="record" name="rosbag_record_drone"
+       args="record -o $(find Mambo_ROS_Examples)/Bags/test_SQUARE /vicon/Mambo_5/Mambo_5 /control_effort_alt /control_effort_hdg /control_effort_pos_X /control_effort_pos_Y /setpoint_pos_X /setpoint_pos_Y /setpoint_alt /r_setpoint_hdg /ready /record /hdg /rhinf_ref_x /rhinf_st_x /rhinf_ref_y /rhinf_st_y" />-->
+  <!--</group>-->
+</launch>

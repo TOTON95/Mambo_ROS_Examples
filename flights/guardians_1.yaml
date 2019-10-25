@@ -1,0 +1,11 @@
+# simple waypoint test
+
+#name of drone
+mocap_name: "Mambo_4"
+
+#vicon tags
+uas_1: /vicon/Mambo_4/Mambo_4
+uas_2: /vicon/Mambo_5/Mambo_5
+uas_3: /vicon/Mambo_6/Mambo_6
+uas_target: /vicon/SUMO_11_5_2018/SUMO_11_5_2018
+
