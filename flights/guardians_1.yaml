@@ -1,4 +1,4 @@
-# simple waypoint test
+# Experiment configuration for mambo_guardians, you can change the actors and target here
 
 #name of drone
 mocap_name: "Mambo_4"
