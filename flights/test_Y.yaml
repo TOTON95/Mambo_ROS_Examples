@@ -1,4 +1,4 @@
-# simple waypoint test
+# Simple waypoint test in the Y axis
 
 #name of drone
 mocap_name: "Mambo_4"

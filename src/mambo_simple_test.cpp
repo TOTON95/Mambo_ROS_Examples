@@ -1,3 +1,9 @@
+/* \file mambo_simple_test.cpp
+ * \author Alexis Guijarro
+ * \license This project is released under the GNU Public License Version 3 (GPLv3)
+ * \brief This is an open-loop experiment to test the Mambo Parrot drone, recommended for beginners in an open space
+ */
+
 #include <ros/ros.h>
 #include <std_msgs/Empty.h>
 #include <std_msgs/UInt8.h>
@@ -28,7 +34,7 @@ float _arc2;
 float _arc3;
 float _fixed_arc;
 
-//==============================Bebop_simple_test==========================
+//==============================Mambo_simple_test==========================
 
 bool active = false;			//Store the actual state, true (the drone is active and flying)
 
