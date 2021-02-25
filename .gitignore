@@ -1,4 +1,7 @@
 # Ignore Experiment Results
 Bags/
+
+# Ignore vim files
 *.swp
 *.swo
+*.swn

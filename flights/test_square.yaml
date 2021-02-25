@@ -1,6 +1,7 @@
-# simple waypoint test
+# Simple waypoint test of a square shape
+# DISCLAIMER: Make sure your experimental space can support this test before flying
 
-#name of drone
+# Name of the vehicle at the Mocap system or Simulation
 mocap_name: "Mambo_2"
 
 #number of waypoints

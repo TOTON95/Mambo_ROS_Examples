@@ -1,6 +1,9 @@
-# simple waypoint test
+# Simple waypoint test of a square shape
+# DISCLAIMER: Make sure your experimental space can support this test before flying
+# This Experiment was designed to test the controller at https://github.com/TOTON95/ros_rhinf
 
-#name of drone
+
+# Name of the vehicle on the Mocap or Simulation
 mocap_name: "Mambo_5"
 
 #number of waypoints
@@ -13,6 +16,7 @@ Y: [0.9, 0.9, -0.9, -0.9, 0.9, 0.9, -0.9, -0.9, 0.9, 0.9, -0.9, -0.9]
 # z (meters)
 Z: [1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10]
 # Heading [deg]
-Hdg: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 90.0, 180.0, 270.0]
+#Hdg: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 90.0, 180.0, 270.0]
+Hdg: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 # Waiting time at each waypoint [s]
 Time_goal: [10.0]
