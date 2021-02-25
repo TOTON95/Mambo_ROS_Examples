@@ -4,6 +4,7 @@
  * \brief This is the core navigation system by waypoints for the Mambo drone
  */
 
+// Include Libraries
 #include <std_msgs/Empty.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/String.h>
@@ -21,32 +22,33 @@
 #include <iostream>
 #include <vector>
 
+// Constants 
 #define PI 3.141592653589793238462
 
-double hdg;                                                             //Heading of UAS
-int btn_emergency;                                                      //Physical emergency's button
-bool on_live = false;                                                   //The option to modify waypoints from topics
-geometry_msgs::Twist cmd_vel_mambo;                                     //Velocity data for each UAS
-double ce_hdg, ce_pos_X, ce_pos_Y, ce_alt;                              //Control efforts for PD controller
-std_msgs::Float64 st_pos_X, st_pos_Y, st_alt, st_hdg;			        //States variables
+double hdg;								//Heading of UAS
+int btn_emergency;							//Physical emergency's button
+bool on_live = false;							//The option to modify waypoints from topics
+geometry_msgs::Twist cmd_vel_mambo;					//Velocity data for each UAS
+double ce_hdg, ce_pos_X, ce_pos_Y, ce_alt;				//Control efforts for PD controller
+std_msgs::Float64 st_pos_X, st_pos_Y, st_alt, st_hdg;			//States variables
 std_msgs::Float64 stp_pos_X, stp_pos_Y, stp_alt, stp_hdg;		        //Setpoints variables
-Mambo_ROS_Examples::Waypoints waypoints;				                //Vector with waypoints
-Mambo_ROS_Examples::Waypoint t_wps;					                    //Current waypoint
-unsigned int c_wps = 0;							                        //Current waypoint index
-double hdg_target; 							                            //Heading target
-double goal_bound = 0.05;						                        //Boundaries of the goal
-int wps;								                                //Number of waypoints
-std::vector<double> x,y,z;						                        //Parameter vectors
-std::vector<double> headings;						                    //Heading vectors
-double time_goal;							                            //Time to stay at waypoint
-ros::WallTime _time;							                        //Time of the system
-ros::WallTime _actual_time;						                        //Actual Time
-ros::WallTime _last_time; 						                        //Last time captured
-double _time_data;							                            //Raw time data
-double _time_secs;							                            //Time in seconds
+Mambo_ROS_Examples::Waypoints waypoints;					//Vector with waypoints
+Mambo_ROS_Examples::Waypoint t_wps;					//Current waypoint
+unsigned int c_wps = 0;							//Current waypoint index
+double hdg_target;							//Heading target
+double goal_bound = 0.05;						//Boundaries of the goal
+int wps;								//Number of waypoints
+std::vector<double> x,y,z;						//Parameter vectors
+std::vector<double> headings;						//Heading vectors
+double time_goal;							//Time to stay at waypoint
+ros::WallTime _time;							//Time of the system
+ros::WallTime _actual_time;						//Actual Time
+ros::WallTime _last_time;						//Last time captured
+double _time_data;							//Raw time data
+double _time_secs;							//Time in seconds
 double _time_wait;						
 
-bool ready = false;							                            //Ready to get orders
+bool ready = false;							//Ready to get orders
 
 /// Vehicle object for convenience 
 struct v_object
@@ -82,11 +84,11 @@ void getMamboPos(const geometry_msgs::TransformStamped::ConstPtr& pos)
 
     tf::Quaternion q(pos->transform.rotation.x,pos->transform.rotation.y,pos->transform.rotation.z,pos->transform.rotation.w);
     tf::Matrix3x3 m(q);
-    m.getRPY(mambo.roll,mambo.pitch,mambo.yawRAD);               	    //Get the Roll, Pitch, Yaw (Radians)
-    mambo.yaw = mambo.yawRAD*(180/PI);                            	    //Convert the Yaw (Radians) into Yaw (Degrees)
+    m.getRPY(mambo.roll,mambo.pitch,mambo.yawRAD);			//Get the Roll, Pitch, Yaw (Radians)
+    mambo.yaw = mambo.yawRAD*(180/PI);					//Convert the Yaw (Radians) into Yaw (Degrees)
     hdg = mambo.yaw;                                           	        //Set the hdg of the drone
-    mambo.abs_x = mambo.posX;                                           //Set the absolute position of the drone in X
-    mambo.abs_y = mambo.posY;                                           //Set the absolute position of the drone in Y
+    mambo.abs_x = mambo.posX;						//Set the absolute position of the drone in X
+    mambo.abs_y = mambo.posY;						//Set the absolute position of the drone in Y
 }
 
 /// Avoids problems with the hdg of the motion capture system
@@ -181,7 +183,7 @@ bool getWayPointInfo()
         return false;
     }
 
-    t_wps = waypoints.wps[c_wps];						                                 //Assign stored waypoint to current waypoint
+    t_wps = waypoints.wps[c_wps];							//Assign stored waypoint to current waypoint
 
     bool x_no_top_reached = mambo.posX < (waypoints.wps[c_wps].wp.x + goal_bound);
     bool x_no_bottom_reached = mambo.posX > (waypoints.wps[c_wps].wp.x - goal_bound);
@@ -192,12 +194,12 @@ bool getWayPointInfo()
 
     if(x_no_top_reached && x_no_bottom_reached && y_no_top_reached && y_no_bottom_reached && z_no_top_reached && z_no_bottom_reached)
     {
-        _time = ros::WallTime::now();                                                    //Get the current time
-        _actual_time = _time;                                                            //Save the current time
-        _time_secs = _actual_time.toSec() - _last_time.toSec();                          //Get the time of the order in seconds
-        _actual_time = _last_time;					                                     //Set current time to be the latest
-        _time_data += _time_secs;                                                        //Sum the seconds to count every second inside the zone
-        if(_time_data > time_goal)                                                       //If the drone stays more than x seconds in the zone
+        _time = ros::WallTime::now();							//Get the current time
+        _actual_time = _time;								//Save the current time
+        _time_secs = _actual_time.toSec() - _last_time.toSec();				//Get the time of the order in seconds
+        _actual_time = _last_time;							//Set current time to be the latest
+        _time_data += _time_secs;							//Sum the seconds to count every second inside the zone
+        if(_time_data > time_goal)							//If the drone stays more than x seconds in the zone
         {
             _time_data = 0;
             ROS_INFO("\n<--Waypoint %d reached-->\n",c_wps);
@@ -210,22 +212,22 @@ bool getWayPointInfo()
 //Main function
 int main(int argc, char** argv)
 {
-    ros::init(argc,argv,"mambo_waypoints", ros::init_options::AnonymousName);	          //InitROS node
-    ros::NodeHandle n;                                                                    //Creates the node handle
-    ros::Subscriber joy_sub,mambo_sub;                                                    //Joystick and Vicon subs
-    ros::Subscriber pid_pos_X,pid_pos_Y,pid_hdg,pid_alt;                                  //PID controllers subs
-    ros::Subscriber wps_sub;					                                          //Waypoints Sub
-    ros::Subscriber wp_sub;						                                          //Waypoint Sub (One-by-one)
-    ros::Subscriber ready_sub;					                                          //Ready Sub
-    ros::Publisher state_pos_X,state_pos_Y,state_hdg,state_alt;                           //Current state of the drone
-    ros::Publisher sp_pos_X,sp_pos_Y,sp_hdg,sp_alt;                                       //Set the goal of the drone
-    ros::Publisher sp_real_hdg;					                                          //Real hdg setpoint
-    ros::Publisher tko,land;                                                              //Take-off and landing publisher
-    ros::Publisher cmd_vel;                                                               //Velocity command of the drone
-    ros::Publisher record;						                                          //Signal to record
-    ros::Publisher hdg_pub;						                                          //Converted heading
+    ros::init(argc,argv,"mambo_waypoints", ros::init_options::AnonymousName);		//InitROS node
+    ros::NodeHandle n;									//Creates the node handle
+    ros::Subscriber joy_sub,mambo_sub;							//Joystick and Vicon subs
+    ros::Subscriber pid_pos_X,pid_pos_Y,pid_hdg,pid_alt;					//PID controllers subs
+    ros::Subscriber wps_sub;								//Waypoints Sub
+    ros::Subscriber wp_sub;								//Waypoint Sub (One-by-one)
+    ros::Subscriber ready_sub;								//Ready Sub
+    ros::Publisher state_pos_X,state_pos_Y,state_hdg,state_alt;				//Current state of the drone
+    ros::Publisher sp_pos_X,sp_pos_Y,sp_hdg,sp_alt;					//Set the goal of the drone
+    ros::Publisher sp_real_hdg;								//Real hdg setpoint
+    ros::Publisher tko,land;								//Take-off and landing publisher
+    ros::Publisher cmd_vel;								//Velocity command of the drone
+    ros::Publisher record;								//Signal to record experiment in a rosbag (start signal)
+    ros::Publisher hdg_pub;								//Converted heading
 
-    std::string vehicle_name;					                                          //Vehicle name at VICON
+    std::string vehicle_name;								//Vehicle name at VICON
 
     //Getting parameters
     bool load_param = true;
@@ -346,7 +348,7 @@ int main(int argc, char** argv)
     }
 
 
-    record.publish(msg_tko);					                     //Record here
+    record.publish(msg_tko);						//Record here
 
     //Stops the node once that <Ctrl + C > is pressed
     while(n.ok())
@@ -356,16 +358,16 @@ int main(int argc, char** argv)
         {
             ros::Duration(0.525).sleep();
             printf("\n========== L A N D [ J S ]==========\n");
-            land.publish(msg_land);                                  //Land the drone
+            land.publish(msg_land);					//Land the drone
             break;
         }
 
         if(!on_live){
-            if(!getWayPointInfo())			                         //Get Waypoint information
+            if(!getWayPointInfo())					//Get Waypoint information
             {
                 ros::Duration(0.525).sleep();
                 printf("\n========== L A N D [ E N D ]==========\n");
-                //land.publish(msg_land);                            //Land the drone if end is reached
+                //land.publish(msg_land);				//Land the drone if end is reached
                 break;
             }
         }
