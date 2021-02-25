@@ -27,17 +27,17 @@
 #define PI 3.141592653589793238462
 #define N_DRONES 3                                 //Number of drones
 
-double hdg;								                                //Heading of UAS
-int btn_emergency;							                          //Physical emergency's button
-bool on_live = false; 							                      //The option to modify waypoints from topics
-std::vector<std::string> drones_topics; 				       //Topics with the drones
-std::string target_topic;						                    //Topic with the target
-Mambo_ROS_Examples::Waypoints wps;					            //Collection of destination waypoints for drones
-Mambo_ROS_Examples::Waypoint target;					          //Target position
-double altitude = 1.10;							                     //Altitude of formation (meters)
+double hdg;								           //Heading of UAS
+int btn_emergency;							       //Physical emergency's button
+bool on_live = false; 							   //The option to modify waypoints from topics
+std::vector<std::string> drones_topics; 		   //Topics with the drones
+std::string target_topic;						   //Topic with the target
+Mambo_ROS_Examples::Waypoints wps;				   //Collection of destination waypoints for drones
+Mambo_ROS_Examples::Waypoint target;			   //Target position
+double altitude = 1.10;							   //Altitude of formation (meters)
 
-std::vector<ros::Subscriber> drones_sub;                                //Vector of subscribers
-ros::Subscriber target_sub;                                             //Target subscriber
+std::vector<ros::Subscriber> drones_sub;           //Vector of subscribers
+ros::Subscriber target_sub;                        //Target subscriber
 
 double offset_circle = 0;                          //Offset of angle
 double radius_circle = 1.25;                       //Radius of formation (meters)
