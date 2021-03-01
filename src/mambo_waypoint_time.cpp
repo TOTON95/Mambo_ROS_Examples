@@ -1,3 +1,10 @@
+
+/* \file mambo_waypoint_time.cpp
+ * \author Alexis Guijarro
+ * \license This project is released under the GNU Public License Version 3 (GPLv3)
+ * \brief This is an experiment designed to run a Mambo Parrot drone through a series of waypoints based on time lapses
+ */
+
 //ROS Headers
 #include <ros/ros.h>
 
