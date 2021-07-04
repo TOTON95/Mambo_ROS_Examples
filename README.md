@@ -1,5 +1,7 @@
 # Mambo_ROS_Examples 
 
+![Mambo ROS Examples Artwork](https://toton95.github.io/assets/img/posts/Mambo_ROS_Examples_2.jpg)
+
 This is a collection based on my previous repository ([Bebop_ROS_Examples](https://github.com/TOTON95/Bebop_ROS_Examples)), but for this time, this collection is targeted to Mambo Parrot Drone using [ros_pyparrot](https://github.com/TOTON95/ros_pyparrot). This collection contains experiments with and without a Motion Capture System (Vicon), with one or more drones. Additionally, you can test our robust control strategy with perturbation estimation by cloning [ros_rhinf](https://github.com/TOTON95/ros_rhinf) (required for rhinf experiments).
 
 ## Credit
