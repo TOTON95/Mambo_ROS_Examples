@@ -1,0 +1,3 @@
+<launch>
+  <node name="mambo_vision" pkg="mambo_color_follower" type="mambo_color_follower_node" output="screen" />
+</launch>
