@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(Mambo_ROS_Examples)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -13,7 +13,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   std_msgs
+  cv_bridge 
+  image_transport
 )
+
+find_package(OpenCV REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -107,7 +111,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES Mambo_ROS_Examples
-  CATKIN_DEPENDS geometry_msgs message_generation roscpp sensor_msgs std_msgs
+  CATKIN_DEPENDS geometry_msgs message_generation roscpp sensor_msgs std_msgs cv_bridge image_transport
 #  DEPENDS system_lib
 )
 
@@ -120,6 +124,7 @@ catkin_package(
 include_directories(
  include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -141,6 +146,7 @@ add_executable(mambo_waypoints_time src/mambo_waypoint_time.cpp)
 add_executable(mambo_waypoints_circle src/mambo_waypoint_circle.cpp)
 add_executable(mambo_guardian_angels_node src/mambo_guardian_angels.cpp)
 add_executable(mambo_guardian_angels_virtual_node src/mambo_guardian_angels_virtual.cpp src/ArcDrone.cpp)
+add_executable(mambo_color_follower_node src/mambo_color_follower.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -155,6 +161,7 @@ add_dependencies(mambo_waypoints_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catk
 add_dependencies(mambo_waypoints_time ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_waypoints_circle ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_guardian_angels_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(mambo_guardian_angels_virtual_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_guardian_angels_virtual_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
@@ -175,6 +182,12 @@ add_dependencies(mambo_guardian_angels_virtual_node ${${PROJECT_NAME}_EXPORTED_T
  )
  target_link_libraries(mambo_guardian_angels_virtual_node
    ${catkin_LIBRARIES}
+ )
+ target_link_libraries(mambo_color_follower_node
+     ${catkin_LIBRARIES}
+ )
+ target_link_libraries(mambo_color_follower_node
+      ${OpenCV_LIBS}
  )
 
 
