@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   std_msgs
-  cv_bridge 
+  cv_bridge
   image_transport
 )
 
@@ -142,6 +142,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 #add_executable(mambo_simple_test_node src/mambo_simple_test.cpp)
 add_executable(mambo_waypoints_node src/mambo_waypoints.cpp src/ArcDrone.cpp)
+add_executable(mambo_simple_test_node src/mambo_simple_test.cpp src/ArcDrone.cpp)
 add_executable(mambo_waypoints_time src/mambo_waypoint_time.cpp)
 add_executable(mambo_waypoints_circle src/mambo_waypoint_circle.cpp)
 add_executable(mambo_guardian_angels_node src/mambo_guardian_angels.cpp)

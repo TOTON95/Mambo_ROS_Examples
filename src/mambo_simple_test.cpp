@@ -22,7 +22,7 @@
 */
 
 //////////////////////////////
-int test = 2; // <----- TEST /
+int test = 0; // <----- TEST /
 //////////////////////////////
 
 //Heading Variables
@@ -68,6 +68,9 @@ int main(int argc, char** argv)
 	ros::Publisher takeoff_mambo;			//Sends the message to make the drone to take off 
 	ros::Publisher land_mambo;			//Sends the message to make the drone to land
 	ros::Publisher cmd_vel_pub_mambo;		//Sends the message to move the drone
+
+    ros::Publisher correct_hdg;
+    ros::Publisher correct_alt;
 
 	std_msgs::Empty msg_takeoff, msg_land;		//Messages created to take-off and land procedures 
 	geometry_msgs::Twist cmd_vel_mambo;		//Contains the data to make the drone fly in certain direction
