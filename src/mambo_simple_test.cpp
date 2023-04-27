@@ -10,6 +10,9 @@
 #include <tf/transform_datatypes.h>
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/Float64.h>
+#include <Mambo_ROS_Examples/ArcDrone.h>
+#include <Mambo_ROS_Examples/PID_ROS.h>
+#include <Mambo_ROS_Examples/Altitude.h>
 #include <stdio.h>
 
 #define PI 3.141592653589793238462
@@ -37,6 +40,7 @@ float _fixed_arc;
 //==============================Mambo_simple_test==========================
 
 bool active = false;			//Store the actual state, true (the drone is active and flying)
+Mambo_ROS_Examples::Altitude alt;
 
 //Function used to convert the heading data onboard from the drone. 
 void get_heading(float _orientationX, float _orientationY , float _orientationZ, float _orientationW)
@@ -72,8 +76,20 @@ int main(int argc, char** argv)
     ros::Publisher correct_hdg;
     ros::Publisher correct_alt;
 
+    PID pid_alt;					//PID Altitude 
+    pid_alt.gpro = 3.5;				//Proportional Constant
+    pid_alt.ginteg = 0.0;				//Integral Constant
+    pid_alt.gder = 0.0001;				//Derivative Constant
+
+    PID_h pid_hdg;					//PID Heading
+    pid_hdg.gpro = 0.15;				//Proportional Constant
+    pid_hdg.ginteg = 0.0;				//Integral Constant
+    pid_hdg.gder = 0.00002;				//Derivative Constant
+
 	std_msgs::Empty msg_takeoff, msg_land;		//Messages created to take-off and land procedures 
 	geometry_msgs::Twist cmd_vel_mambo;		//Contains the data to make the drone fly in certain direction
+    std_msgs::Float64 output_alt_pid;		//The signal of the PID to control over the alttitude
+	std_msgs::Float64 output_hdg_pid;		//The signal of the PID to control over the heading
 
 	takeoff_mambo = n.advertise<std_msgs::Empty>("/mambo/takeoff",1000);					//Publish data to the take-off topic
 	land_mambo = n.advertise<std_msgs::Empty>("/mambo/land",1000);						//Publish data to the land topic

@@ -57,6 +57,7 @@ find_package(OpenCV REQUIRED)
    FILES
     Waypoint.msg
     Waypoints.msg
+    Altitude.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -142,7 +143,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 #add_executable(mambo_simple_test_node src/mambo_simple_test.cpp)
 add_executable(mambo_waypoints_node src/mambo_waypoints.cpp src/ArcDrone.cpp)
-add_executable(mambo_simple_test_node src/mambo_simple_test.cpp src/ArcDrone.cpp)
+add_executable(mambo_simple_test_node src/mambo_simple_test.cpp src/ArcDrone.cpp src/PID_ROS.cpp)
 add_executable(mambo_waypoints_time src/mambo_waypoint_time.cpp)
 add_executable(mambo_waypoints_circle src/mambo_waypoint_circle.cpp)
 add_executable(mambo_guardian_angels_node src/mambo_guardian_angels.cpp)
@@ -158,6 +159,7 @@ add_executable(mambo_color_follower_node src/mambo_color_follower.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 #add_dependencies(mambo_simple_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(mambo_simple_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_waypoints_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_waypoints_time ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mambo_waypoints_circle ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -166,9 +168,9 @@ add_dependencies(mambo_guardian_angels_virtual_node ${${PROJECT_NAME}_EXPORTED_T
 add_dependencies(mambo_guardian_angels_virtual_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- #target_link_libraries(mambo_simple_test_node
-  # ${catkin_LIBRARIES}
- #)
+ target_link_libraries(mambo_simple_test_node
+   ${catkin_LIBRARIES}
+ )
  target_link_libraries(mambo_waypoints_node
    ${catkin_LIBRARIES}
  )
