@@ -7,7 +7,8 @@ mambo_new_twist = Twist()
 
 def cb_getTwist(msg):
     global mambo_new_twist
-    mambo_new_twist.linear = msg.linear
+    mambo_new_twist.linear.x = 0
+    mambo_new_twist.linear.y = 5.0 * msg.linear.x
     mambo_new_twist.angular.z = -msg.angular.z
 
 
